@@ -1,5 +1,6 @@
 Joe
 Finish Menu Screen
+Figure out how to shrink button text.
 
 Kevin
 Power Ups (general)

@@ -55,10 +55,14 @@ public class BallMovement : MonoBehaviour {
 				GUI.Label(new Rect(100,0,500,100),"Player 2 Wins");
 			}
 			if(GUI.Button(new Rect(Screen.width/2-(90/2),Screen.height/2,178,56), retryButtonTexture,GUIStyle.none)){
-					
+				playerWon= 0;
+				Debug.Log("Wants a new game");
+				//todo: Randomize listing for next level or select level screen
+				Application.LoadLevel("breakoutMidWall");
 			}
 			if(GUI.Button(new Rect(Screen.width/2-(90/2),(Screen.height/2)+56,178,56), quitButtonTexture,GUIStyle.none)){
-					
+				playerWon= 0;
+				Application.LoadLevel("breakoutMenu");
 			}
 		}
 	}

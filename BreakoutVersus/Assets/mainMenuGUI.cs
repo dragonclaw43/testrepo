@@ -27,8 +27,16 @@ public class mainMenuGUI : MonoBehaviour {
 			
 		}
 		else if(MenuIdx == 1){
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30), levelSelectButton,GUIStyle.none)){
+			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30), new GUIContent("Cancel"),GUIStyle.none)){
+			  Application.LoadLevel("breakoutMenu");
 			}
+			if(GUI.Button(new Rect(100,(Screen.height*.80f),100,30), new GUIContent("MidWall Level") ,GUIStyle.none)){
+			  Application.LoadLevel("breakoutMidWall");
+			}
+			// Repeat adnauseum for more buttons.  Maybe need textures for each?
+			//if(GUI.Button(new Rect(210,(Screen.height*.80f),100,30),new GUIContent("Cross Level") ,GUIStyle.none)){
+			//  Application.LoadLevel("breakoutCross");
+			//}
 		}
 	}
 }
