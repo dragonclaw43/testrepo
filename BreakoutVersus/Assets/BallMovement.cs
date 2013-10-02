@@ -58,7 +58,7 @@ public class BallMovement : MonoBehaviour {
 				playerWon= 0;
 				Debug.Log("Wants a new game");
 				//todo: Randomize listing for next level or select level screen
-				Application.LoadLevel("breakoutMidWall");
+				Application.LoadLevel(Application.loadedLevelName);
 			}
 			if(GUI.Button(new Rect(Screen.width/2-(90/2),(Screen.height/2)+56,178,56), quitButtonTexture,GUIStyle.none)){
 				playerWon= 0;

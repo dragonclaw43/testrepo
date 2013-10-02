@@ -34,9 +34,9 @@ public class mainMenuGUI : MonoBehaviour {
 			  Application.LoadLevel("breakoutMidWall");
 			}
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
-			//if(GUI.Button(new Rect(210,(Screen.height*.80f),100,30),new GUIContent("Cross Level") ,GUIStyle.none)){
-			//  Application.LoadLevel("breakoutCross");
-			//}
+			if(GUI.Button(new Rect(210,(Screen.height*.80f),100,30),new GUIContent("Cross Level") ,GUIStyle.none)){
+			  Application.LoadLevel("breakoutCross");
+			}
 		}
 	}
 }
