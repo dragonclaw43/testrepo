@@ -51,6 +51,7 @@
      <Compile Include="Assets\blockScript.cs" />
      <Compile Include="Assets\gui.cs" />
      <Compile Include="Assets\mainMenuGUI.cs" />
+     <Compile Include="Assets\powerUp.cs" />
      <None Include="Assets\Hard Surface Free\HardSurface Shaders\HardSurfacePro Hidden Front Cut Out Specular.shader" />
      <None Include="Assets\Hard Surface Free\HardSurface Shaders\HardSurface Free Cut Out Opaque Bump.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />

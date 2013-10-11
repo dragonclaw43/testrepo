@@ -17,15 +17,20 @@ public class BallMovement : MonoBehaviour {
 	public Texture 	retryButtonTexture;
 	public Texture quitButtonTexture;
 	
+	public GameObject paddle1;
+	public GameObject paddle2;
 	public GameObject otherBall;
 	
 	public Font myFont;
 	
+	public int stickToPaddle = 0;
+	bool stuck = false;
+	
 	int playerWon = 0;
 	// Use this for initialization
 	void Start () {
-		initialVelocity = new Vector3(minSpeed,0,minSpeed);
-		rigidbody.AddRelativeForce(initialVelocity);
+		stuck = true;
+		//rigidbody.AddRelativeForce(initialVelocity);
 		
 	}
 	
@@ -68,24 +73,71 @@ public class BallMovement : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
-		curSpeed = Vector3.Magnitude( rigidbody.velocity);
+		if (Input.GetKey(KeyCode.D) && stickToPaddle == 1){
+			Debug.Log("D Pressed");
+			stuck = false;
+			stickToPaddle = 0;
+			
+			float velocity = (paddle1.GetComponent<PlayerMovement>().currentZ - 
+								paddle1.GetComponent<PlayerMovement>().previousZ)/Time.deltaTime;
+			
+			initialVelocity = new Vector3(minSpeed,0,velocity);
+			rigidbody.AddRelativeForce(initialVelocity);
+		}
 		
-		if(curSpeed > maxSpeed){
-			rigidbody.velocity /= curSpeed / maxSpeed;
+        if (Input.GetKey(KeyCode.LeftArrow) && stickToPaddle == 2){
+			Debug.Log("Left Arrow Pressed");
+			stuck = false;
+			stickToPaddle = 0;
+			
+			float velocity = 	(paddle2.GetComponent<PlayerMovement>().currentZ - 
+									paddle2.GetComponent<PlayerMovement>().previousZ)/Time.deltaTime;
+			
+			initialVelocity = new Vector3(-minSpeed,0,velocity);
+			rigidbody.AddRelativeForce(initialVelocity);
 		}
-		if(curSpeed < minSpeed && curSpeed > 0){
-			rigidbody.velocity /= curSpeed / minSpeed;
+		
+		
+		if(stuck){
+			if(stickToPaddle == 1){
+				transform.position = new Vector3(	paddle1.transform.position.x + paddle1.renderer.bounds.size.x ,
+													paddle1.transform.position.y ,
+													paddle1.transform.position.z);
+			}
+			else{
+				transform.position = paddle2.transform.position;
+			}
 		}
+		else{
+			curSpeed = Vector3.Magnitude( rigidbody.velocity);
+			
+			if(curSpeed > maxSpeed){
+				rigidbody.velocity /= curSpeed / maxSpeed;
+			}
+			if(curSpeed < minSpeed && curSpeed > 0){
+				rigidbody.velocity /= curSpeed / minSpeed;
+			}
+		}
+		
 		//this.transform.Translate(new Vector3(movementX,0,movementZ));
 	}
 	
 	void OnCollisionEnter(Collision theCollision){
 		
 		if(theCollision.collider.gameObject.name == "Player1" || theCollision.collider.gameObject.name == "Player2"){
-			//audio.clip = PlayerCollisionSound;
+			//audio.clip = PlayerCollisiodnSound;
 			audio.PlayOneShot(PlayerCollisionSound);	
-			float differenceZ = theCollision.contacts[0].point.z - theCollision.collider.gameObject.transform.position.z;
-			rigidbody.AddRelativeForce(new Vector3(0,0,differenceZ));
+			if(stickToPaddle == 0){
+				float differenceZ = theCollision.contacts[0].point.z - theCollision.collider.gameObject.transform.position.z;
+				
+				float velocity = 	(theCollision.collider.gameObject.GetComponent<PlayerMovement>().currentZ - 
+									theCollision.collider.gameObject.GetComponent<PlayerMovement>().previousZ)/Time.deltaTime;
+				
+				rigidbody.AddRelativeForce(new Vector3(3,0,velocity*2*differenceZ));
+			}
+			else{
+				stuck = true;
+			}
 		}
 		else if(theCollision.collider.gameObject.name == "block"){
 			//audio.clip = blockCollisionSound;
