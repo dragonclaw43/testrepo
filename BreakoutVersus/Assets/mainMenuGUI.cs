@@ -10,6 +10,10 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture player2Controls;
 	public Texture touchControls;
 	public Texture levelSelectButton;
+	public Texture MWLevelCapture;
+	public Texture CLevelCapture;
+	public Texture quitbutton;
+				
 	// Use this for initialization
 	void Start () {
 	
@@ -26,15 +30,15 @@ public class mainMenuGUI : MonoBehaviour {
 			}
 			
 		}
-		else if(MenuIdx == 1){
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30), new GUIContent("Cancel"),GUIStyle.none)){
+		else if(MenuIdx == 1){			
+			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30),quitbutton,GUIStyle.none)){
 			  Application.LoadLevel("breakoutMenu");
 			}
-			if(GUI.Button(new Rect(100,(Screen.height*.80f),100,30), new GUIContent("MidWall Level") ,GUIStyle.none)){
+			if(GUI.Button(new Rect(200,(Screen.height*.70f),115,115),MWLevelCapture,GUIStyle.none)){
 			  Application.LoadLevel("breakoutMidWall");
 			}
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
-			if(GUI.Button(new Rect(210,(Screen.height*.80f),100,30),new GUIContent("Cross Level") ,GUIStyle.none)){
+			if(GUI.Button(new Rect(280,(Screen.height*.70f),115,115),CLevelCapture,GUIStyle.none)){
 			  Application.LoadLevel("breakoutCross");
 			}
 		}
