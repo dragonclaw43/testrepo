@@ -5,12 +5,12 @@ public class blockScript : MonoBehaviour {
 	public int m_hitsLeft = 1;
 	public Color texture;
 	
-	int puLONG 		=1;
-	int puSHORT 	=2;
-	int puMAGNET 	=3;
-	int puSPEEDUP 	=4;
-	int puSPEEDDOWN =5;
-	int puSTICK 	=6;
+	//int puLONG 		=1;
+	//int puSHORT 		=2;
+	//int puMAGNET 		=3;
+	//int puSPEEDUP 	=4;
+	//int puSPEEDDOWN 	=5;
+	//int puSTICK 		=6;
 	
 	public Texture tex1;
 	public Texture tex2;

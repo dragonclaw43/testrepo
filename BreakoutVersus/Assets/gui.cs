@@ -9,9 +9,14 @@ public class gui : MonoBehaviour {
 	PlayerMovement m_playerMovement;
 	public Texture buttonTexture;
 	public Texture buttonUnstickTexture;
-	
+	int buttonSize;
 	void Start () {
-	
+		if(Screen.dpi != 0){
+			buttonSize = (int) Screen.dpi;
+		}
+		else{
+			buttonSize = 50;
+		}
 	}
 	
 	void Update () {
@@ -19,31 +24,36 @@ public class gui : MonoBehaviour {
 	
 	
 	void OnGUI () {
-		if(GUI.RepeatButton(new Rect(0,0,40,40), buttonTexture,GUIStyle.none)){
+		
+		// Player 1 Left
+		if(GUI.RepeatButton(new Rect(0,0,buttonSize,buttonSize), buttonTexture,GUIStyle.none)){
 			PlayerMovement other = (PlayerMovement) m_goPlayer1.GetComponent(typeof(PlayerMovement));
 			other.moveUp();
 		}
-		if(GUI.RepeatButton(new Rect(0,Screen.height-40,40,40), buttonTexture,GUIStyle.none)){
+		// Player 1 Right
+		if(GUI.RepeatButton(new Rect(0,Screen.height-buttonSize,buttonSize,buttonSize), buttonTexture,GUIStyle.none)){
 			PlayerMovement other = (PlayerMovement) m_goPlayer1.GetComponent(typeof(PlayerMovement));
 			other.moveDown();
 		}
-		
-		if(GUI.RepeatButton(new Rect(Screen.width-40,0,40,40), buttonTexture,GUIStyle.none)){
+		// Player 2 Right
+		if(GUI.RepeatButton(new Rect(Screen.width-buttonSize,0,buttonSize,buttonSize), buttonTexture,GUIStyle.none)){
 			PlayerMovement other = (PlayerMovement) m_goPlayer2.GetComponent(typeof(PlayerMovement));
 			other.moveUp();
 		}
-		if(GUI.RepeatButton(new Rect(Screen.width-40,Screen.height-40,40,40), buttonTexture,GUIStyle.none)){
+		// Player 2 Left
+		if(GUI.RepeatButton(new Rect(Screen.width-buttonSize,Screen.height-buttonSize,buttonSize,buttonSize), buttonTexture,GUIStyle.none)){
 			PlayerMovement other = (PlayerMovement) m_goPlayer2.GetComponent(typeof(PlayerMovement));
 			other.moveDown();
 		}
-		
-		if(GUI.RepeatButton(new Rect(40,Screen.height-40,40,40), buttonUnstickTexture,GUIStyle.none)){
-			PlayerMovement other = (PlayerMovement) m_goPlayer2.GetComponent(typeof(PlayerMovement));
-			other.moveDown();
+		// Player 1 unstick
+		if(GUI.RepeatButton(new Rect(buttonSize,Screen.height-buttonSize,buttonSize,buttonSize), buttonUnstickTexture,GUIStyle.none)){
+			PlayerMovement other = (PlayerMovement) m_goPlayer1.GetComponent(typeof(PlayerMovement));
+			other.unstick();
 		}
-		if(GUI.RepeatButton(new Rect(Screen.width-80,0,40,40), buttonUnstickTexture,GUIStyle.none)){
+		// player 2 unstick
+		if(GUI.RepeatButton(new Rect(Screen.width-(buttonSize*2),0,buttonSize,buttonSize), buttonUnstickTexture,GUIStyle.none)){
 			PlayerMovement other = (PlayerMovement) m_goPlayer2.GetComponent(typeof(PlayerMovement));
-			other.moveDown();
+			other.unstick();
 		}
 		
 	}

@@ -13,7 +13,7 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture MWLevelCapture;
 	public Texture CLevelCapture;
 	public Texture quitbutton;
-				
+
 	// Use this for initialization
 	void Start () {
 	
@@ -25,22 +25,25 @@ public class mainMenuGUI : MonoBehaviour {
 	}
 	void OnGUI () {
 		if(MenuIdx == 0){
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30), startButton,GUIStyle.none)){
+			if(GUI.Button(new Rect(100,(Screen.height*.75f),200,60), startButton,GUIStyle.none)){
 				MenuIdx = 1;
 			}
 			
 		}
 		else if(MenuIdx == 1){			
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),100,30),quitbutton,GUIStyle.none)){
+			if(GUI.Button(new Rect(100,(Screen.height*.75f),200,60),quitbutton,GUIStyle.none)){
 			  Application.LoadLevel("breakoutMenu");
 			}
-			if(GUI.Button(new Rect(200,(Screen.height*.70f),115,115),MWLevelCapture,GUIStyle.none)){
+			if(GUI.Button(new Rect(250,(Screen.height*.70f),150,150),MWLevelCapture,GUIStyle.none)){
 			  Application.LoadLevel("breakoutMidWall");
 			}
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
-			if(GUI.Button(new Rect(280,(Screen.height*.70f),115,115),CLevelCapture,GUIStyle.none)){
+			if(GUI.Button(new Rect(350,(Screen.height*.70f),150,150),CLevelCapture,GUIStyle.none)){
 			  Application.LoadLevel("breakoutCross");
 			}
 		}
+		GUI.Box(new Rect(Screen.width-350,50,300,200),player1Controls);
+		GUI.Box(new Rect(Screen.width-350,275,300,200),player2Controls);
+		GUI.Box(new Rect(Screen.width-350,500,300,200),touchControls);
 	}
 }
