@@ -25,25 +25,31 @@ public class mainMenuGUI : MonoBehaviour {
 	}
 	void OnGUI () {
 		if(MenuIdx == 0){
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),200,60), startButton,GUIStyle.none)){
+			if(GUI.Button(new Rect(10,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), startButton,GUIStyle.none)){
 				MenuIdx = 1;
 			}
 			
 		}
-		else if(MenuIdx == 1){			
-			if(GUI.Button(new Rect(100,(Screen.height*.75f),200,60),quitbutton,GUIStyle.none)){
+		else if(MenuIdx == 1){	
+			float x = 10;
+			if(GUI.Button(new Rect(x,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)),quitbutton,GUIStyle.none)){
+				Debug.Log("quit");
 			  Application.LoadLevel("breakoutMenu");
 			}
-			if(GUI.Button(new Rect(250,(Screen.height*.70f),150,150),MWLevelCapture,GUIStyle.none)){
+			x += 10 + (Screen.width*.2f);
+			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),MWLevelCapture,GUIStyle.none)){
+				Debug.Log("mid wall");
 			  Application.LoadLevel("breakoutMidWall");
 			}
+			x += 10 + (Screen.width*.1f);
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
-			if(GUI.Button(new Rect(350,(Screen.height*.70f),150,150),CLevelCapture,GUIStyle.none)){
+			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),CLevelCapture,GUIStyle.none)){
+				Debug.Log("cross");
 			  Application.LoadLevel("breakoutCross");
 			}
 		}
-		GUI.Box(new Rect(Screen.width-350,50,300,200),player1Controls);
-		GUI.Box(new Rect(Screen.width-350,275,300,200),player2Controls);
-		GUI.Box(new Rect(Screen.width-350,500,300,200),touchControls);
+		GUI.DrawTexture(new Rect(Screen.width-(Screen.width*.3f),	0,										(Screen.width*.3f),	Screen.height/3	),player1Controls);
+		GUI.DrawTexture(new Rect(Screen.width-(Screen.width*.3f),	Screen.height/3,						(Screen.width*.3f),	Screen.height/3	),player2Controls);
+		GUI.DrawTexture(new Rect(Screen.width-(Screen.width*.3f),	(Screen.height/3)+(Screen.height/3),	(Screen.width*.3f),	Screen.height/3	),touchControls);
 	}
 }
