@@ -25,10 +25,16 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public float m_velocity = 0.0f;		// between -1.0 and 1.0 used for ball
 	
+	Vector2 touchDeltaPosition;
+		
+	int playerControlType;
 	void Start () {
 		m_collisionType = colNONE;
 		previousZ = gameObject.transform.position.z;
 		currentZ = gameObject.transform.position.z;
+		
+		GameObject camera = GameObject.Find("Main Camera");
+		playerControlType = camera.GetComponent<GlobalVariables>().getPlayerControlType();
 	}
 	void Update(){
 		previousZ = currentZ;
@@ -59,84 +65,96 @@ public class PlayerMovement : MonoBehaviour {
 		else if(m_velocity > 0){
 			m_velocity -= 0.03f;
 		}
-		if(Input.touchCount > 0){
-			Touch a = Input.GetTouch(0);
-			if(a.position.x > 0 && m_PlayerType == ptRIGHTCHARACTER){
-				transform.position = new Vector3(transform.position.x,transform.position.y,a.position.y);
-			}
-			else if(m_PlayerType == ptLEFTCHARACTER){
-				transform.position = new Vector3(transform.position.x,transform.position.y,a.position.y);
+		if(playerControlType == 2){
+			if(Input.touchCount > 0){
+				for(int i=0;i<Input.touchCount;i++){
+					touchDeltaPosition = Input.GetTouch(i).position;
+					// 8.5 - -8.5    0 - screen.height
+					float heightpercent = touchDeltaPosition.y/Screen.height;
+					float heightTotal = heightpercent*17; // 17 is height of screen in points
+					heightTotal = heightTotal - 8.5f;
+					
+					if(touchDeltaPosition.x > (Screen.width/2) && m_PlayerType == ptRIGHTCHARACTER){
+						transform.position = new Vector3(transform.position.x,transform.position.y,heightTotal);
+					}
+					else if(touchDeltaPosition.x < (Screen.width/2) && m_PlayerType == ptLEFTCHARACTER){
+						transform.position = new Vector3(transform.position.x,transform.position.y,heightTotal);
+					}
+				}
 			}
 		}
-		if(m_PlayerType == ptLEFTCHARACTER){
-        	if (Input.GetKey(KeyCode.W)){
-				if(m_collisionType != colTOP){
-					
-					float playerTop = (this.transform.position.z + (this.renderer.bounds.size.z/2));
-					if(playerTop < 9.75){
-            			this.transform.Translate(new Vector3(0,0,m_playerSpeed));
+			
+			
+		if(playerControlType == 1){
+			if(m_PlayerType == ptLEFTCHARACTER){
+	        	if (Input.GetKey(KeyCode.W)){
+					if(m_collisionType != colTOP){
+						
+						float playerTop = (this.transform.position.z + (this.renderer.bounds.size.z/2));
+						if(playerTop < 9.75){
+	            			this.transform.Translate(new Vector3(0,0,m_playerSpeed));
+						}
+						
+						if(m_velocity < 0){
+							m_velocity = 0;
+						}
+						if(m_velocity < 1){
+							m_velocity += 0.05f;
+						}
+					}
+				}
+				if (Input.GetKey(KeyCode.S)){
+					if(m_collisionType != colBOTTOM){
+						
+						float playerBottom = (this.transform.position.z - (this.renderer.bounds.size.z/2));
+						if(playerBottom > -9.75){
+							this.transform.Translate(new Vector3(0,0,-m_playerSpeed));
+						}
 					}
 					
-					if(m_velocity < 0){
+					if(m_velocity > 0){
 						m_velocity = 0;
 					}
-					if(m_velocity < 1){
-						m_velocity += 0.05f;
+					if(m_velocity > -1){
+						m_velocity -= 0.05f;
 					}
 				}
 			}
-			if (Input.GetKey(KeyCode.S)){
-				if(m_collisionType != colBOTTOM){
-					
-					float playerBottom = (this.transform.position.z - (this.renderer.bounds.size.z/2));
-					if(playerBottom > -9.75){
-						this.transform.Translate(new Vector3(0,0,-m_playerSpeed));
+			else if(m_PlayerType == ptRIGHTCHARACTER){
+				if (Input.GetKey(KeyCode.UpArrow)){
+					if(m_collisionType != colTOP){
+						
+						float playerTop = (this.transform.position.z + (this.renderer.bounds.size.z/2));
+						if(playerTop < 9.75){
+	            			this.transform.Translate(new Vector3(0,0,m_playerSpeed));
+						}
+						
+						if(m_velocity < 0){
+							m_velocity = 0;
+						}
+						if(m_velocity < 1){
+							m_velocity += 0.05f;
+						}
 					}
 				}
-				
-				if(m_velocity > 0){
-					m_velocity = 0;
-				}
-				if(m_velocity > -1){
-					m_velocity -= 0.05f;
-				}
-			}
-		}
-		else if(m_PlayerType == ptRIGHTCHARACTER){
-			if (Input.GetKey(KeyCode.UpArrow)){
-				if(m_collisionType != colTOP){
-					
-					float playerTop = (this.transform.position.z + (this.renderer.bounds.size.z/2));
-					if(playerTop < 9.75){
-            			this.transform.Translate(new Vector3(0,0,m_playerSpeed));
+				if (Input.GetKey(KeyCode.DownArrow)){
+					if(m_collisionType != colBOTTOM){
+						
+						float playerBottom = (this.transform.position.z - (this.renderer.bounds.size.z/2));
+						if(playerBottom > -9.75){
+	            			this.transform.Translate(new Vector3(0,0,-m_playerSpeed));
+						}
 					}
 					
-					if(m_velocity < 0){
+					if(m_velocity > 0){
 						m_velocity = 0;
 					}
-					if(m_velocity < 1){
-						m_velocity += 0.05f;
+					if(m_velocity > -1){
+						m_velocity -= 0.05f;
 					}
-				}
-			}
-			if (Input.GetKey(KeyCode.DownArrow)){
-				if(m_collisionType != colBOTTOM){
-					
-					float playerBottom = (this.transform.position.z - (this.renderer.bounds.size.z/2));
-					if(playerBottom > -9.75){
-            			this.transform.Translate(new Vector3(0,0,-m_playerSpeed));
-					}
-				}
-				
-				if(m_velocity > 0){
-					m_velocity = 0;
-				}
-				if(m_velocity > -1){
-					m_velocity -= 0.05f;
 				}
 			}
 		}
-		
 		
 	}
   
@@ -211,7 +229,7 @@ public class PlayerMovement : MonoBehaviour {
 	void OnCollisionExit (Collision col){
 		m_collisionType = colNONE;
 	}
-
+	
 	public void OnPowerUpCollide (int powerUpType){
 		m_powerUpType = powerUpType;
 		

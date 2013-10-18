@@ -5,6 +5,8 @@ public class mainMenuGUI : MonoBehaviour {
 	
 	int MenuIdx = 0;
 	
+	int playerControlType = 0;
+	
 	public Texture startButton;
 	public Texture player1Controls;
 	public Texture player2Controls;
@@ -13,7 +15,11 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture MWLevelCapture;
 	public Texture CLevelCapture;
 	public Texture quitbutton;
-
+	
+	public Texture optionbutton;
+	public Texture touchbutton;
+	public Texture buttonbutton;
+	public Texture keyboardbutton;
 	// Use this for initialization
 	void Start () {
 	
@@ -26,7 +32,7 @@ public class mainMenuGUI : MonoBehaviour {
 	void OnGUI () {
 		if(MenuIdx == 0){
 			if(GUI.Button(new Rect(10,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), startButton,GUIStyle.none)){
-				MenuIdx = 1;
+				MenuIdx = 2;
 			}
 			
 		}
@@ -46,6 +52,24 @@ public class mainMenuGUI : MonoBehaviour {
 			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),CLevelCapture,GUIStyle.none)){
 				Debug.Log("cross");
 			  Application.LoadLevel("breakoutCross");
+			}
+		}
+		else if(MenuIdx == 2){
+			GUI.Box(new Rect(10,(Screen.height*.55f),(Screen.width*.5f),(Screen.height*.15f)),"Control Type");
+			if(GUI.Button(new Rect(10,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), keyboardbutton,GUIStyle.none)){
+				GameObject camera = GameObject.Find("Main Camera");
+				camera.GetComponent<GlobalVariables>().setPlayerControlType(1);
+				MenuIdx = 1;
+			}
+			if(GUI.Button(new Rect(10+(Screen.width*.2f),(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), touchbutton,GUIStyle.none)){
+				GameObject camera = GameObject.Find("Main Camera");
+				camera.GetComponent<GlobalVariables>().setPlayerControlType(2);
+				MenuIdx = 1;
+			}
+			if(GUI.Button(new Rect(10+(Screen.width*.2f)+10+(Screen.width*.2f),(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), buttonbutton,GUIStyle.none)){
+				GameObject camera = GameObject.Find("Main Camera");
+				camera.GetComponent<GlobalVariables>().setPlayerControlType(3);
+				MenuIdx = 1;
 			}
 		}
 		GUI.DrawTexture(new Rect(Screen.width-(Screen.width*.3f),	0,										(Screen.width*.3f),	Screen.height/3	),player1Controls);

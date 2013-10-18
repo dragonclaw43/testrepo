@@ -46,7 +46,7 @@ public class BallMovement : MonoBehaviour {
 			initialVelocity = new Vector3(0,0,minSpeed);
 			rigidbody.AddRelativeForce(initialVelocity);
 		}
-		
+		playerWon = 0;
 		
 	}
 	
@@ -104,22 +104,24 @@ public class BallMovement : MonoBehaviour {
 	}
 	
 	void OnGUI () {
+		
+		
 		if(playerWon != 0){
 			GUI.skin.font = myFont;
 			
 			GUI.Box(new Rect(0,0,Screen.width,Screen.height),"");
 			if(playerWon == 1){
-				GUI.Label(new Rect(100,0,500,100),"Player 1 Wins");	
+				GUI.Label(new Rect(0,0,Screen.width/2,Screen.height/4),"Player 1 Wins");	
 			}
 			else{
-				GUI.Label(new Rect(100,0,500,100),"Player 2 Wins");
+				GUI.Label(new Rect(0,0,Screen.width/2,Screen.height/4),"Player 2 Wins");
 			}
-			if(GUI.Button(new Rect(Screen.width/2-(90/2),Screen.height/2,178,56), retryButtonTexture,GUIStyle.none)){
+			if(GUI.Button(new Rect((Screen.width/2)-(Screen.width/8),	(Screen.height/2)-(Screen.height/8),	(Screen.width/4),	(Screen.height/4)), retryButtonTexture,GUIStyle.none)){
 				playerWon= 0;
 				//todo: Randomize listing for next level or select level screen
 				Application.LoadLevel(Application.loadedLevelName);
 			}
-			if(GUI.Button(new Rect(Screen.width/2-(90/2),(Screen.height/2)+56,178,56), quitButtonTexture,GUIStyle.none)){
+			if(GUI.Button(new Rect((Screen.width/2)-(Screen.width/8),	(Screen.height/2)+(Screen.height/8),	(Screen.width/4),	(Screen.height/4)), quitButtonTexture,GUIStyle.none)){
 				playerWon= 0;
 				Application.LoadLevel("breakoutMenu");
 			}
