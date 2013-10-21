@@ -14,6 +14,7 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture levelSelectButton;
 	public Texture MWLevelCapture;
 	public Texture CLevelCapture;
+    public Texture ELevelCapture;
 	public Texture quitbutton;
 	
 	public Texture optionbutton;
@@ -52,6 +53,12 @@ public class mainMenuGUI : MonoBehaviour {
 			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),CLevelCapture,GUIStyle.none)){
 				Debug.Log("cross");
 			  Application.LoadLevel("breakoutCross");
+			}
+			x += 10 + (Screen.width*.1f);
+			// Repeat adnauseum for more buttons.  Maybe need textures for each?
+			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),ELevelCapture,GUIStyle.none)){
+				Debug.Log("cross");
+			  Application.LoadLevel("breakoutEye");
 			}
 		}
 		else if(MenuIdx == 2){
