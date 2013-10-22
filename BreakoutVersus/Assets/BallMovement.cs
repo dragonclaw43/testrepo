@@ -247,10 +247,18 @@ public class BallMovement : MonoBehaviour {
 			if(stickToPaddle == 0){
 				float differenceZ = theCollision.contacts[0].point.z - theCollision.collider.gameObject.transform.position.z;
 				
-				float velocity = 	(theCollision.collider.gameObject.GetComponent<PlayerMovement>().currentZ - 
-									theCollision.collider.gameObject.GetComponent<PlayerMovement>().previousZ)/Time.deltaTime;
+				float velocity = theCollision.collider.gameObject.GetComponent<PlayerMovement>().m_velocity;
 				
-				rigidbody.AddRelativeForce(new Vector3(3,0,velocity*2*differenceZ));
+				
+				
+				if(velocity <= .2 && velocity >= -.2){
+					Debug.Log(200*differenceZ);
+					rigidbody.AddRelativeForce(new Vector3(3,0,100*differenceZ));
+				}
+				else{
+					rigidbody.AddRelativeForce(new Vector3(3,0,300*velocity));
+					Debug.Log(25*velocity);
+				}
 			}
 			else{
 				stuck = true;
@@ -263,6 +271,7 @@ public class BallMovement : MonoBehaviour {
 		else{
 			//audio.clip = wallCollisionSound;
 			audio.PlayOneShot(wallCollisionSound);
+			rigidbody.AddRelativeForce(new Vector3(3,0,20));
 		}
 		rigidbody.velocity += rigidbody.velocity * multiplier;
 	}

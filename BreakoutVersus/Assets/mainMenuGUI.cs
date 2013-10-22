@@ -15,6 +15,8 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture MWLevelCapture;
 	public Texture CLevelCapture;
     public Texture ELevelCapture;
+	public Texture BLevelCapture;
+    public Texture TLevelCapture;
 	public Texture quitbutton;
 	
 	public Texture optionbutton;
@@ -22,8 +24,11 @@ public class mainMenuGUI : MonoBehaviour {
 	public Texture buttonbutton;
 	public Texture keyboardbutton;
 	// Use this for initialization
-	void Start () {
 	
+	public GUIStyle customGuiStyle;
+	void Start () {
+		customGuiStyle.fontSize = (int) (Screen.height *.15);
+		customGuiStyle.normal.textColor = Color.white;
 	}
 	
 	// Update is called once per frame
@@ -35,6 +40,9 @@ public class mainMenuGUI : MonoBehaviour {
 			if(GUI.Button(new Rect(10,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), startButton,GUIStyle.none)){
 				MenuIdx = 2;
 			}
+			if(GUI.Button(new Rect(10,((Screen.height*.75f)+(Screen.height*.1f))+ 5,(Screen.width*.2f),(Screen.height*.1f)), quitbutton,GUIStyle.none)){
+				Application.Quit();
+			}
 			
 		}
 		else if(MenuIdx == 1){	
@@ -43,26 +51,39 @@ public class mainMenuGUI : MonoBehaviour {
 				Debug.Log("quit");
 			  Application.LoadLevel("breakoutMenu");
 			}
-			x += 10 + (Screen.width*.2f);
+			x += (Screen.width*.2f);
 			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),MWLevelCapture,GUIStyle.none)){
 				Debug.Log("mid wall");
 			  Application.LoadLevel("breakoutMidWall");
 			}
-			x += 10 + (Screen.width*.1f);
+			x +=(Screen.width*.1f);
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
 			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),CLevelCapture,GUIStyle.none)){
 				Debug.Log("cross");
 			  Application.LoadLevel("breakoutCross");
 			}
-			x += 10 + (Screen.width*.1f);
+			x += (Screen.width*.08f);
 			// Repeat adnauseum for more buttons.  Maybe need textures for each?
 			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),ELevelCapture,GUIStyle.none)){
 				Debug.Log("cross");
 			  Application.LoadLevel("breakoutEye");
 			}
+			x += 10 + (Screen.width*.1f);
+			// Repeat adnauseum for more buttons.  Maybe need textures for each?
+			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),BLevelCapture,GUIStyle.none)){
+				Debug.Log("backboard");
+			  Application.LoadLevel("breakoutBackboard");
+			}
+			x += (Screen.width*.1f);
+			// Repeat adnauseum for more buttons.  Maybe need textures for each?
+			if(GUI.Button(new Rect(x,(Screen.height*.70f),(Screen.width*.1f),(Screen.height*.2f)),TLevelCapture,GUIStyle.none)){
+				Debug.Log("tunnel");
+			  Application.LoadLevel("breakoutTunnel");
+			}
 		}
 		else if(MenuIdx == 2){
-			GUI.Box(new Rect(10,(Screen.height*.55f),(Screen.width*.5f),(Screen.height*.15f)),"Control Type");
+			GUI.Box(new Rect(10,(Screen.height*.55f),(Screen.width*.5f),(Screen.height*.15f)),"Control Type",customGuiStyle);
+			
 			if(GUI.Button(new Rect(10,(Screen.height*.75f),(Screen.width*.2f),(Screen.height*.1f)), keyboardbutton,GUIStyle.none)){
 				GameObject camera = GameObject.Find("Main Camera");
 				camera.GetComponent<GlobalVariables>().setPlayerControlType(1);
